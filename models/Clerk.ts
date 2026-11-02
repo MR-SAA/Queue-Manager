@@ -1,5 +1,5 @@
 import { Visitor } from "./Visitor";
-class Clerk {
+export class Clerk {
     private name: string;
     private busy: boolean;
     private visitorsHelped: number;
