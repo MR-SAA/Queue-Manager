@@ -19,16 +19,26 @@ class QueueManager{
         this.identifier_num++;
     }
 
+    public addClerk(name: string){
+       let newClerk = new Clerk(name, false, 0, null);
+       this.clerks.push(newClerk);
+
+    }
+
+    // public removeClerk(){
+        
+    // }
+
 
 
 
 }
 
-// const manager = new QueueManager();
+const manager = new QueueManager();
 
-// manager.addVisitor("Test");
-// manager.addVisitor("Test2");
-// manager.addVisitor("Test3");
+manager.addVisitor("Test");
+manager.addVisitor("Test2");
+manager.addVisitor("Test3");
+manager.addClerk("John");
 
-
-// console.log(manager.waitingRoom);
+console.log(manager.clerks);
