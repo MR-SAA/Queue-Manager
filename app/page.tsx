@@ -36,17 +36,32 @@ export default function Home() {
 
   }
 
+
   function addClerk(name: string){
     queueManager.addClerk(name);
     setClerk([...queueManager.clerks])
   }
 
+  function clearClerk(name: string){
+    queueManager.clearClerk(name);
+    setClerk([...queueManager.clerks]);
+
+  }
+
+  function removeClerk(name: string){
+    queueManager.removeClerk(name);
+    setClerk([...queueManager.clerks]);
+
+  }
+
+
+
   //This sets up the React stuff, so you can connect the input of a text box to a React state
   const [reason, setText] = useState("");
   const [clerk_name, setName] = useState("");
   const [visitor_to_assign, setTheVisitor] = useState("");
-
-
+  const [clerk_name_to_clear, clearName] = useState("");
+  const [clerk_name_to_remove, removeName] = useState("");
 
   //Using .map() allows the waiting_room array to be displayed below
   //the key stuff allows react to know that each instnce of visitor is a new entry so it will make a new line
@@ -126,6 +141,41 @@ return (
           Submit
         </button>
       </div>
+
+      {/*Clear Clerk UI*/}
+      <div className="w-full flex justify-center">
+        {/* Add clerk textbox code */}
+        <p className="px-3">Clear Clerk:</p>
+        <input
+          className="text-center items-center"
+          type="text"
+          placeholder="Clerk Name"
+          value={clerk_name_to_clear}
+          onChange={(event) => clearName(event.target.value)}
+        />
+        {/* Have a button that then takes that input and updates the waiting room */}
+        <button className="px-3" onClick={() => clearClerk(clerk_name_to_clear)}>
+          Submit
+        </button>
+      </div>
+
+      {/*Remove Clerk UI*/}
+      <div className="w-full flex justify-center">
+        {/* Add clerk textbox code */}
+        <p className="px-3">Remove Clerk:</p>
+        <input
+          className="text-center items-center"
+          type="text"
+          placeholder="Clerk Name"
+          value={clerk_name_to_remove}
+          onChange={(event) => removeName(event.target.value)}
+        />
+        {/* Have a button that then takes that input and updates clerks */}
+        <button className="px-3" onClick={() => removeClerk(clerk_name_to_remove)}>
+          Submit
+        </button>
+      </div>
+
 
 
       <div>
