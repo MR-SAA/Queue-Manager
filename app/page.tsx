@@ -19,6 +19,7 @@ export default function Home() {
   //This allows me to use the useState() function of react to take in reasons and have react update them as the page updates
   //setReason is a function this React method gives us so that we can update the reasons in the future
   const [visitors, setVisitor] = useState([...queueManager.waitingRoom]);
+  const [clerks, setClerk] = useState([...queueManager.clerks])
 
   //This function calls the useState() function we just made so we can then have a html interface use this function to then update the table
   function addVisitor(reason: string){
@@ -26,52 +27,119 @@ export default function Home() {
     setVisitor([...queueManager.waitingRoom]);
   }
 
+  function addClerk(name: string){
+    queueManager.addClerk(name);
+    setClerk([...queueManager.clerks])
+  }
+
   //This sets up the React stuff, so you can connect the input of a text box to a React state
-  const [text, setText] = useState("");
+  const [reason, setText] = useState("");
+  const [clerk_name, setName] = useState("");
 
   //Using .map() allows the waiting_room array to be displayed below
   //the key stuff allows react to know that each instnce of visitor is a new entry so it will make a new line
-  const reasons = visitors.map(visitors => <p key={visitors.reason}>{visitors.reason}</p>);
+  const reasons = visitors.map(visitors => <p key={visitors.identifier}>{visitors.reason}</p>);
   const identifier = visitors.map(visitor => <p key={visitor.identifier}>{visitor.identifier}</p>)
+  const date = visitors.map(visitor => <p key={visitor.identifier}>{visitor.time.toLocaleTimeString()}</p>)
+  
+  const name = clerks.map(clerks => <p key={clerks.name}>{clerks.name}</p>)
+  const visitorsHelped = clerks.map(clerks => <p key={clerks.name}>{clerks.visitorsHelped}</p>)
+  const visitorAssigned = clerks.map(clerks => <p key={clerks.name}>{clerks.visitorAssigned?.identifier}</p>)
 
 
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-start py-8 px-16 bg-white dark:bg-black">
-        {/* Display Queue Manager as the title at the top of the screen */}
-        <h1 className="text-4xl font-bold text-center mb-8"> 
-          Queue Manager </h1>
-        <div>
-          <h2 className="text-2xl text-left font-bold mb-8">Waiting Room</h2>
-          {/* Use HTML Table to create an adapting table that can display the waiting room info */}
-          <table>
-            {/* Make the header of the table with all the catagories */}
-            <thead>
-              <tr>
-                <th className="px-6">Identifier</th>
-                <th className="px-6">Reason</th>
-                <th className="px-6">Date</th>
-              </tr>
-            </thead>
+return (
+  <div className="flex flex-col flex-1 items-start justify-center bg-zinc-50 font-sans dark:bg-black">
+    <main className="flex flex-1 w-full flex-col items-start justify-start py-8 px-16 bg-white dark:bg-black">
 
-            {/* Actual body of waiting room */}
-            <tbody>
-              <tr>
-                <td className="px-6">{identifier}</td>
-                <td className="px-6">{reasons}</td>
-              </tr>
-            </tbody>
-          </table>
+      {/* Display Queue Manager as the title at the top of the screen */}
+      <h1 className="w-full text-4xl font-bold text-center mb-8">
+        Queue Manager
+      </h1>
 
-          {/* Add Visitor textbox code */}
-          <input type="text" placeholder="Visitor Reason" value={text} onChange={(event) => setText(event.target.value)}>
-          </input>
-          {/* Have a button that then takes that input and updates the waiting room */}
-          <button onClick={() => addVisitor(text)}>
-            Submit
-          </button>
-        </div>
-      </main>
-    </div>
-  );
+      <div className="w-full flex justify-center">
+        {/* Add Visitor textbox code */}
+        <p className="px-3">New Visitor:</p>
+        <input
+          className="text-center items-center"
+          type="text"
+          placeholder="Visitor Reason"
+          value={reason}
+          onChange={(event) => setText(event.target.value)}
+        />
+        {/* Have a button that then takes that input and updates the waiting room */}
+        <button className="px-3" onClick={() => addVisitor(reason)}>
+          Submit
+        </button>
+      </div>
+
+      <div className="w-full flex justify-center">
+        {/* Add clerk textbox code */}
+        <p className="px-3">Add Clerk:</p>
+        <input
+          className="text-center items-center"
+          type="text"
+          placeholder="Clerk Name"
+          value={clerk_name}
+          onChange={(event) => setName(event.target.value)}
+        />
+        {/* Have a button that then takes that input and updates the waiting room */}
+        <button className="px-3" onClick={() => addClerk(clerk_name)}>
+          Submit
+        </button>
+      </div>
+
+      <div>
+        <h2 className="text-2xl text-left font-bold mb-8">Waiting Room</h2>
+
+        {/* Use HTML Table to create an adapting table that can display the waiting room info */}
+        <table>
+          {/* Make the header of the table with all the catagories */}
+          <thead>
+            <tr>
+              <th className="px-6">Identifier</th>
+              <th className="px-6">Reason</th>
+              <th className="px-6">Date</th>
+            </tr>
+          </thead>
+
+          {/* Actual body of waiting room */}
+          <tbody>
+            <tr>
+              <td className="px-6">{identifier}</td>
+              <td className="px-6">{reasons}</td>
+              <td className="px-6">{date}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Clerk array */}
+      <div>
+        <h2 className="text-2xl text-left font-bold mb-8">Clerk List</h2>
+
+        {/* Use HTML Table to create an adapting table that can display the waiting room info */}
+        <table>
+          {/* Make the header of the table with all the catagories */}
+          <thead>
+            <tr>
+              <th className="px-6">Clerk Name</th>
+              <th className="px-6">Visitors Helped</th>
+              <th className="px-6">Visitor Assigned</th>
+            </tr>
+          </thead>
+
+          {/* Actual body of waiting room */}
+          <tbody>
+            <tr>
+              <td className="px-6">{name}</td>
+              <td className="px-6">{visitorsHelped}</td>
+              <td className="px-6">{visitorAssigned}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+);
 }

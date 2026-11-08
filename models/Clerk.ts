@@ -1,11 +1,11 @@
 import { Visitor } from "./Visitor";
 export class Clerk {
-    private name: string;
+    public name: string;
     private busy: boolean;
-    private visitorsHelped: number;
-    private visitorAssigned: Visitor | null = null;
+    public visitorsHelped: number;
+    public visitorAssigned: Visitor | null = null;
 
-    constructor(name: string, busy: boolean, visitorsHelped: number, visitorAssigned: Visitor){
+    constructor(name: string, busy: boolean, visitorsHelped: number, visitorAssigned: Visitor | null){
         this.name = name;
         this.busy = busy;
         this.visitorsHelped = visitorsHelped;
