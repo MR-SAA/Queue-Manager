@@ -2,7 +2,7 @@ import { Visitor } from "./Visitor";
 import { Clerk } from "./Clerk";
 import { Old_Standard_TT } from "next/font/google";
 
-class QueueManager{
+export class QueueManager{
     public clerks: Array<Clerk> = [];
     public waitingRoom: Array<Visitor> = [];
     public beingHelped: Array<Visitor> = [];
