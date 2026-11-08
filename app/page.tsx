@@ -21,10 +21,19 @@ export default function Home() {
   const [visitors, setVisitor] = useState([...queueManager.waitingRoom]);
   const [clerks, setClerk] = useState([...queueManager.clerks])
 
+  const [selectedClerk, setSelectedClerk] = useState("");
+  const [visitorID, setVisitorID] = useState("")
   //This function calls the useState() function we just made so we can then have a html interface use this function to then update the table
   function addVisitor(reason: string){
     queueManager.addVisitor(reason);
     setVisitor([...queueManager.waitingRoom]);
+  }
+
+  function assignVisitor(identifier: number, name: string){
+    queueManager.assignVisitor(identifier, name);
+    setVisitor([...queueManager.waitingRoom]);
+    setClerk([...queueManager.clerks]);
+
   }
 
   function addClerk(name: string){
@@ -35,6 +44,9 @@ export default function Home() {
   //This sets up the React stuff, so you can connect the input of a text box to a React state
   const [reason, setText] = useState("");
   const [clerk_name, setName] = useState("");
+  const [visitor_to_assign, setTheVisitor] = useState("");
+
+
 
   //Using .map() allows the waiting_room array to be displayed below
   //the key stuff allows react to know that each instnce of visitor is a new entry so it will make a new line
@@ -45,6 +57,8 @@ export default function Home() {
   const name = clerks.map(clerks => <p key={clerks.name}>{clerks.name}</p>)
   const visitorsHelped = clerks.map(clerks => <p key={clerks.name}>{clerks.visitorsHelped}</p>)
   const visitorAssigned = clerks.map(clerks => <p key={clerks.name}>{clerks.visitorAssigned?.identifier}</p>)
+
+  const dropDownNames = clerks.map(clerk => <option key={clerk.name} value={clerk.name}>{clerk.name}</option>)
 
 
 return (
@@ -87,6 +101,32 @@ return (
           Submit
         </button>
       </div>
+
+
+      <div className="w-full flex justify-center">
+        {/* assignVisitor textbox code */}
+        <p className="px-3">Assign Visitor:</p>
+        {/* HTML Drop down code, so the Manager can select the Clerks from who is already there */}
+        <select
+          value={selectedClerk}
+          onChange={(event) => setSelectedClerk(event.target.value)}>
+          {/* Makes it so you have to select a clerk first. Otherwise things dont work */}
+          <option value="" disabled>Select a Clerk</option>
+          {dropDownNames}
+        </select>
+        <input
+          className="text-center items-center"
+          type="text"
+          placeholder="Visitor Identifier"
+          value={visitor_to_assign}
+          onChange={(event) => setTheVisitor(event.target.value)}
+        />
+        {/* Have a button that then takes that input and updates the waiting room */}
+        <button className="px-3" onClick={() => assignVisitor(Number(visitor_to_assign), selectedClerk)}>
+          Submit
+        </button>
+      </div>
+
 
       <div>
         <h2 className="text-2xl text-left font-bold mb-8">Waiting Room</h2>
