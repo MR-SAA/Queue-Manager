@@ -84,97 +84,100 @@ return (
       <h1 className="w-full text-4xl font-bold text-center mb-8">
         Queue Manager
       </h1>
+      
+      <div className="w-full flex flex-col items-center">
+        <div className="w-full flex justify-center">
+          {/* Add Visitor textbox code */}
+          <p className="px-3">New Visitor:</p>
+          <input
+            className="text-center items-center"
+            type="text"
+            placeholder="Visitor Reason"
+            value={reason}
+            onChange={(event) => setText(event.target.value)}
+          />
+          {/* Have a button that then takes that input and updates the waiting room */}
+          <button className="px-3" onClick={() => addVisitor(reason)}>
+            Submit
+          </button>
+        </div>
 
-      <div className="w-full flex justify-center">
-        {/* Add Visitor textbox code */}
-        <p className="px-3">New Visitor:</p>
-        <input
-          className="text-center items-center"
-          type="text"
-          placeholder="Visitor Reason"
-          value={reason}
-          onChange={(event) => setText(event.target.value)}
-        />
-        {/* Have a button that then takes that input and updates the waiting room */}
-        <button className="px-3" onClick={() => addVisitor(reason)}>
-          Submit
-        </button>
+        <div className="w-full flex justify-center">
+          {/* Add clerk textbox code */}
+          <p className="px-3">Add Clerk:</p>
+          <input
+            className="text-center items-center"
+            type="text"
+            placeholder="Clerk Name"
+            value={clerk_name}
+            onChange={(event) => setName(event.target.value)}
+          />
+          {/* Have a button that then takes that input and updates the waiting room */}
+          <button className="px-3" onClick={() => addClerk(clerk_name)}>
+            Submit
+          </button>
+        </div>
+
+
+        <div className="w-full flex justify-center">
+          {/* assignVisitor textbox code */}
+          <p className="px-3">Assign Visitor:</p>
+          {/* HTML Drop down code, so the Manager can select the Clerks from who is already there */}
+          <select
+            value={selectedClerk}
+            onChange={(event) => setSelectedClerk(event.target.value)}>
+            {/* Makes it so you have to select a clerk first. Otherwise things dont work */}
+            <option value="" disabled>Select a Clerk</option>
+            {dropDownNames}
+          </select>
+          <input
+            className="text-center items-center"
+            type="text"
+            placeholder="Visitor Identifier"
+            value={visitor_to_assign}
+            onChange={(event) => setTheVisitor(event.target.value)}
+          />
+          {/* Have a button that then takes that input and updates the waiting room */}
+          <button className="px-3" onClick={() => assignVisitor(Number(visitor_to_assign), selectedClerk)}>
+            Submit
+          </button>
+        </div>
+
+        {/*Clear Clerk UI*/}
+        <div className="w-full flex justify-center">
+          {/* Add clerk textbox code */}
+          <p className="px-3">Clear Clerk:</p>
+          <input
+            className="text-center items-center"
+            type="text"
+            placeholder="Clerk Name"
+            value={clerk_name_to_clear}
+            onChange={(event) => clearName(event.target.value)}
+          />
+          {/* Have a button that then takes that input and updates the waiting room */}
+          <button className="px-3" onClick={() => clearClerk(clerk_name_to_clear)}>
+            Submit
+          </button>
+        </div>
+
+        {/*Remove Clerk UI*/}
+        <div className="w-full flex justify-center">
+          {/* Add clerk textbox code */}
+          <p className="px-3">Remove Clerk:</p>
+          <input
+            className="text-center items-center"
+            type="text"
+            placeholder="Clerk Name"
+            value={clerk_name_to_remove}
+            onChange={(event) => removeName(event.target.value)}
+          />
+          {/* Have a button that then takes that input and updates clerks */}
+          <button className="px-3" onClick={() => removeClerk(clerk_name_to_remove)}>
+            Submit
+          </button>
+        </div>
       </div>
-
-      <div className="w-full flex justify-center">
-        {/* Add clerk textbox code */}
-        <p className="px-3">Add Clerk:</p>
-        <input
-          className="text-center items-center"
-          type="text"
-          placeholder="Clerk Name"
-          value={clerk_name}
-          onChange={(event) => setName(event.target.value)}
-        />
-        {/* Have a button that then takes that input and updates the waiting room */}
-        <button className="px-3" onClick={() => addClerk(clerk_name)}>
-          Submit
-        </button>
-      </div>
-
-
-      <div className="w-full flex justify-center">
-        {/* assignVisitor textbox code */}
-        <p className="px-3">Assign Visitor:</p>
-        {/* HTML Drop down code, so the Manager can select the Clerks from who is already there */}
-        <select
-          value={selectedClerk}
-          onChange={(event) => setSelectedClerk(event.target.value)}>
-          {/* Makes it so you have to select a clerk first. Otherwise things dont work */}
-          <option value="" disabled>Select a Clerk</option>
-          {dropDownNames}
-        </select>
-        <input
-          className="text-center items-center"
-          type="text"
-          placeholder="Visitor Identifier"
-          value={visitor_to_assign}
-          onChange={(event) => setTheVisitor(event.target.value)}
-        />
-        {/* Have a button that then takes that input and updates the waiting room */}
-        <button className="px-3" onClick={() => assignVisitor(Number(visitor_to_assign), selectedClerk)}>
-          Submit
-        </button>
-      </div>
-
-      {/*Clear Clerk UI*/}
-      <div className="w-full flex justify-center">
-        {/* Add clerk textbox code */}
-        <p className="px-3">Clear Clerk:</p>
-        <input
-          className="text-center items-center"
-          type="text"
-          placeholder="Clerk Name"
-          value={clerk_name_to_clear}
-          onChange={(event) => clearName(event.target.value)}
-        />
-        {/* Have a button that then takes that input and updates the waiting room */}
-        <button className="px-3" onClick={() => clearClerk(clerk_name_to_clear)}>
-          Submit
-        </button>
-      </div>
-
-      {/*Remove Clerk UI*/}
-      <div className="w-full flex justify-center">
-        {/* Add clerk textbox code */}
-        <p className="px-3">Remove Clerk:</p>
-        <input
-          className="text-center items-center"
-          type="text"
-          placeholder="Clerk Name"
-          value={clerk_name_to_remove}
-          onChange={(event) => removeName(event.target.value)}
-        />
-        {/* Have a button that then takes that input and updates clerks */}
-        <button className="px-3" onClick={() => removeClerk(clerk_name_to_remove)}>
-          Submit
-        </button>
-      </div>
+      
 
 
 
@@ -205,7 +208,7 @@ return (
 
       {/* Clerk array */}
       <div>
-        <h2 className="text-2xl text-left font-bold mb-8">Clerk List</h2>
+        <h2 className="text-2xl text-left font-bold mb-8 mt-12">Clerk List</h2>
 
         {/* Use HTML Table to create an adapting table that can display the waiting room info */}
         <table>

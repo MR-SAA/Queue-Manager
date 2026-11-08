@@ -28,14 +28,20 @@ export class QueueManager{
     public addVisitor(reason: string){
         const arrivalTime = new Date();
         let newVisitor = new Visitor(reason, this.identifier_num, arrivalTime);
-        this.waitingRoom.push(newVisitor);
-        this.identifier_num++;
+        if(reason != "")
+        {
+            this.waitingRoom.push(newVisitor);
+            this.identifier_num++;
+        }
     }
 
     public addClerk(name: string){
        let newClerk = new Clerk(name, false, 0, null);
-       this.clerks.push(newClerk);
+       if(!this.clerks.find(clerk => clerk.name === name) && name != "")
+        {
+        this.clerks.push(newClerk);
 
+        }
     }
 
     public removeClerk(name: string){
@@ -67,17 +73,3 @@ export class QueueManager{
 
 
 }
-
-const manager = new QueueManager();
-
-manager.addVisitor("Test");
-manager.addVisitor("Test2");
-manager.addVisitor("Test3");
-manager.addClerk("John");
-manager.addClerk("Frank")
-
-manager.assignVisitor(1, "Frank")
-
-manager.clearClerk("Frank")
-
-console.log(manager.beingHelped);
