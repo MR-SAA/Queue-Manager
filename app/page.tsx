@@ -6,7 +6,6 @@ import { QueueManager } from "@/models/QueueManager";
 import { useState } from "react"
 
 //Initalizes queueManager
-const queueManager = new QueueManager();
 
 // //Assigns the waiting room array to a variable
 // let waiting_room = queueManager.waitingRoom
@@ -15,6 +14,8 @@ const queueManager = new QueueManager();
 // queueManager.addVisitor("Test2");
 
 export default function Home() {
+  //Initalizes queueManager in such a way that all the UI tests start fresh when the UI updates by preserving the instance across renders
+  const [queueManager] = useState(() => new QueueManager());
 
   //This allows me to use the useState() function of react to take in reasons and have react update them as the page updates
   //setReason is a function this React method gives us so that we can update the reasons in the future

@@ -1,4 +1,4 @@
-// vite.config.js
+    import path from "node:path";
     import { defineConfig } from 'vite';
     import react from '@vitejs/plugin-react';
 
@@ -8,4 +8,10 @@
         globals: true, // Optional: if you want global APIs like 'expect'
         environment: 'jsdom', // Recommended for React component testing
       },
+
+        resolve: {
+            alias: {
+            "@": path.resolve(process.cwd(), "./"),
+            },
+        },
     });
